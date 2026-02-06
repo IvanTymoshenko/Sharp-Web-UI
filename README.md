@@ -6,6 +6,9 @@ This UI is built in Python using the Gradio framework, which manages the web ser
 
 ![Interface Screenshot](screenshots/Sharp_Web_UI.png)
 
+### NOTE Python Version
+I was using Versio **Python 3.11.14** for Conda environment. Apple SHARP installed correctly on it as well.
+With **Python 3.13** had issues with GaussianSplats3D library. Keep this in mind.
 
 ### Prerequisite: Install Apple SHARP First
 Before you use this UI, you need the actual engine that does the heavy lifting.
