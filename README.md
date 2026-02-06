@@ -3,7 +3,9 @@
 A lightweight, web-based interface for viewing and creating 3D Gaussian Splats using Apple's SHARP model.
 This UI is built in Python using the Gradio framework, which manages the web server and frontend components. The 3D visualization is handled by a custom HTML/JavaScript integration powered by Three.js and the GaussianSplats3D library.
 
+
 ![Interface Screenshot](screenshots/Sharp_Web_UI.png)
+
 
 ### Prerequisite: Install Apple SHARP First
 Before you use this UI, you need the actual engine that does the heavy lifting.
