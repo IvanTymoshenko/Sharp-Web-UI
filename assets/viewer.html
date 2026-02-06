@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splat Viewer</title>
+    <style>
+        body { margin: 0; background-color: #000; overflow: hidden; height: 100vh; font-family: monospace; }
+        #log { 
+            position: absolute; top: 10px; left: 10px; 
+            color: #0f0; background: rgba(0,0,0,0.8); 
+            padding: 10px; pointer-events: none; white-space: pre-wrap;
+            border-radius: 4px; z-index: 100; font-size: 14px;
+        }
+    </style>
+    
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "./three.module.js",
+            "@mkkellogg/gaussian-splats-3d": "./gaussian-splats-3d.module.js"
+        }
+    }
+    </script>
+</head>
+<body>
+    <div id="log">Initializing...</div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { Viewer } from '@mkkellogg/gaussian-splats-3d';
+
+        // Simple on-screen logger so we know if it crashes
+        const logDiv = document.getElementById('log');
+        function log(msg) { logDiv.innerText = msg; console.log(msg); }
+
+        const params = new URLSearchParams(window.location.search);
+        const url = params.get('url');
+
+        if (!url) {
+            log("Error: No URL parameter found.");
+        } else {
+            log("Fetching Data...");
+            
+            // Manually fetch the data because the library gets confused by local file paths
+            fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error("Network error");
+                log("Data fetched. Creating Blob...");
+                return response.blob();
+            })
+            .then(blob => {
+                // This forces the viewer to recognize the extension while the browser ignores the hash
+                const blobUrl = URL.createObjectURL(blob);
+                const fakeUrl = blobUrl + '#.ply'; 
+
+                log("Loading Scene...");
+                
+                // Initialize the viewer with safe settings
+                const viewer = new Viewer({
+                    'cameraUp': [0, -1, 0],
+                    'initialCameraPosition': [0, 0, 5],
+                    'gpuAcceleratedSort': false,     
+                    'sharedMemoryForWorkers': false,
+                    'sphericalHarmonicsDegree': 0 
+                });
+
+                // Load the model using our fake URL
+                return viewer.addSplatScene(fakeUrl, {
+                    'splatAlphaRemovalThreshold': 5,
+                    'showLoadingUI': true,
+                    'streamView': false
+                })
+                .then(() => {
+                    log("Success! Rendering.");
+                    // Hide the log after a second so we can see the model
+                    setTimeout(() => { logDiv.style.display = 'none'; }, 1000);
+
+                    viewer.camera.position.set(0, 0, -1);
+                    
+                    viewer.camera.lookAt(0, 5, 0);
+                    
+                    viewer.start();
+                    
+                });
+            })
+            .catch(err => {
+                log("ERROR:\n" + err.message);
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>
