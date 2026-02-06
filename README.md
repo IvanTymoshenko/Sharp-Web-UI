@@ -3,6 +3,8 @@
 A lightweight, web-based interface for viewing and creating 3D Gaussian Splats using Apple's SHARP model.
 This UI is built in Python using the Gradio framework, which manages the web server and frontend components. The 3D visualization is handled by a custom HTML/JavaScript integration powered by Three.js and the GaussianSplats3D library.
 
+![Interface Screenshot](screenshots/Sharp_Web_UI.png)
+
 ### Prerequisite: Install Apple SHARP First
 Before you use this UI, you need the actual engine that does the heavy lifting.
 1.  Go to the official **Apple SHARP repository**: [https://github.com/apple/ml-sharp](https://github.com/apple/ml-sharp).
@@ -43,7 +45,7 @@ To keep things clean, here is how you should organize your files:
 * **Outputs:** The tool will automatically generate a folder named "generated_splats" for your .PLY results.
 
 ### Features (The Cool Stuff)
-* **Batch Processing:** Can process multiple files 1 by 1. For now i put a limit to 50 generations. On the 51st generation it will delete the oldest one automatically. You can change the limit inside sharp_runner.py file by changing MAX_GENERATIONS = 50 to another number.
+* **Batch Processing:** Can process multiple files 1 by 1. For now i put a limit to 50 generations. On the 51st generation it will delete the oldest one automatically. You can change the limit inside `sharp_runner.py` file by changing `MAX_GENERATIONS = 50` to another number.
 * **Instant 3D Viewer:** You can view, rotate, and zoom into your 3D splats right in the browser.
 * **Simple Interface:** It's just buttons and dropdowns.
 * **Local Privacy:** Everything runs on your machine. Your photos don't go to the cloud.
