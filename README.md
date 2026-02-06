@@ -34,7 +34,7 @@ Once you have Apple SHARP installed and working:
     ```bash
     python app.py
     ```
-8.  Done! Open the local URL shown in your terminal (usually `http://127.0.0.1:7880`). You can always change IP and Port to your likings inside app.py
+8.  Done! Open the local URL shown in your terminal (usually `http://127.0.0.1:7880`). You can always change IP and Port to your likings inside `app.py`
 
 **Tested on Linux**
 
